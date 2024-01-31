@@ -1,0 +1,18 @@
+stdClass Object
+(
+    [producer] => stores/ilhtqzrn07
+    [hash] => 958f5fcc6d2675c9a43b20325c675a5325a54312
+    [created_at] => 1684959523
+    [store_id] => 1000784909
+    [scope] => store/customer/channel/login/access/updated
+    [data] => stdClass Object
+        (
+            [customer_id] => 433165
+            [channel_ids] => Array
+                (
+                    [0] => 0
+                )
+
+        )
+
+)

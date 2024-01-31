@@ -1,0 +1,20 @@
+stdClass Object
+(
+    [producer] => stores/ilhtqzrn07
+    [hash] => 732ed4b88f016ef2e4b5c8dd0c67acffe13eb4e3
+    [created_at] => 1684955931
+    [store_id] => 1000784909
+    [scope] => store/customer/updated
+    [data] => stdClass Object
+        (
+            [type] => customer
+            [id] => 433165
+            [origin_channel_id] => 1
+            [channel_ids] => Array
+                (
+                    [0] => 1
+                )
+
+        )
+
+)

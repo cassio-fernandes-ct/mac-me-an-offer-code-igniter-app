@@ -1,0 +1,486 @@
+error messageerror messageArray
+(
+    [UPSSecurity] => Array
+        (
+            [UsernameToken] => Array
+                (
+                    [Username] => moatdev
+                    [Password] => GXRp8BKEX&93zfYq
+                )
+
+            [ServiceAccessToken] => Array
+                (
+                    [AccessLicenseNumber] => EDC3C05323335E52
+                )
+
+        )
+
+    [ShipmentRequest] => Array
+        (
+            [Request] => Array
+                (
+                    [RequestOption] => validate
+                )
+
+            [Shipment] => Array
+                (
+                    [Description] => 
+                    [Shipper] => Array
+                        (
+                            [Name] => WebFX
+                            [AttentionName] => WebFX
+                            [ShipperNumber] => 8A9Y19
+                            [Address] => Array
+                                (
+                                    [AddressLine] => Array
+                                        (
+                                            [0] => WebFX
+                                        )
+
+                                    [City] => Harrisburg
+                                    [StateProvinceCode] => PA
+                                    [PostalCode] => 17102
+                                    [CountryCode] => US
+                                )
+
+                            [Phone] => Array
+                                (
+                                    [Number] => 7178022323
+                                )
+
+                        )
+
+                    [ShipTo] => Array
+                        (
+                            [Name] => Receiving Dept
+                            [AttentionName] => Receiving Dept
+                            [Address] => Array
+                                (
+                                    [AddressLine] => Array
+                                        (
+                                            [0] => 14474 Carlson Circle
+                                        )
+
+                                    [City] => Tampa
+                                    [StateProvinceCode] => FL
+                                    [PostalCode] => 33626
+                                    [CountryCode] => US
+                                )
+
+                            [Phone] => Array
+                                (
+                                    [Number] => 8005818987
+                                )
+
+                        )
+
+                    [ShipFrom] => Array
+                        (
+                            [Name] => WebFX
+                            [AttentionName] => WebFX
+                            [Address] => Array
+                                (
+                                    [AddressLine] => Array
+                                        (
+                                            [0] => WebFX
+                                        )
+
+                                    [City] => Harrisburg
+                                    [StateProvinceCode] => PA
+                                    [PostalCode] => 17102
+                                    [CountryCode] => US
+                                )
+
+                            [Phone] => Array
+                                (
+                                    [Number] => 7178022323
+                                )
+
+                        )
+
+                    [PaymentInformation] => Array
+                        (
+                            [ShipmentCharge] => Array
+                                (
+                                    [Type] => 01
+                                    [BillShipper] => Array
+                                        (
+                                            [AccountNumber] => 8A9Y19
+                                        )
+
+                                )
+
+                        )
+
+                    [Service] => Array
+                        (
+                            [Code] => 03
+                            [Description] => Service Description
+                        )
+
+                    [Package] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [Description] => Description
+                                    [Packaging] => Array
+                                        (
+                                            [Code] => 02
+                                            [Description] => Description
+                                        )
+
+                                    [PackageWeight] => Array
+                                        (
+                                            [Weight] => 8
+                                            [UnitOfMeasurement] => Array
+                                                (
+                                                    [Code] => LBS
+                                                    [Description] => Pounds
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [LabelSpecification] => Array
+                        (
+                            [LabelImageFormat] => Array
+                                (
+                                    [Code] => GIF
+                                    [Description] => GIF
+                                )
+
+                            [HTTPUserAgent] => Mozilla/4.5
+                        )
+
+                )
+
+        )
+
+)
+Array
+(
+    [UPSSecurity] => Array
+        (
+            [UsernameToken] => Array
+                (
+                    [Username] => moatdev
+                    [Password] => GXRp8BKEX&93zfYq
+                )
+
+            [ServiceAccessToken] => Array
+                (
+                    [AccessLicenseNumber] => EDC3C05323335E52
+                )
+
+        )
+
+    [ShipmentRequest] => Array
+        (
+            [Request] => Array
+                (
+                    [RequestOption] => validate
+                )
+
+            [Shipment] => Array
+                (
+                    [Description] => 
+                    [Shipper] => Array
+                        (
+                            [Name] => XIAOYU
+                            [AttentionName] => XIAOYU
+                            [ShipperNumber] => 8A9Y19
+                            [Address] => Array
+                                (
+                                    [AddressLine] => Array
+                                        (
+                                            [0] => 2548 Earle Ave 
+                                        )
+
+                                    [City] => rosemead
+                                    [StateProvinceCode] => CA
+                                    [PostalCode] => 91770
+                                    [CountryCode] => US
+                                )
+
+                            [Phone] => Array
+                                (
+                                    [Number] => 6262356800
+                                )
+
+                        )
+
+                    [ShipTo] => Array
+                        (
+                            [Name] => Receiving Dept
+                            [AttentionName] => Receiving Dept
+                            [Address] => Array
+                                (
+                                    [AddressLine] => Array
+                                        (
+                                            [0] => 14474 Carlson Circle
+                                        )
+
+                                    [City] => Tampa
+                                    [StateProvinceCode] => FL
+                                    [PostalCode] => 33626
+                                    [CountryCode] => US
+                                )
+
+                            [Phone] => Array
+                                (
+                                    [Number] => 8005818987
+                                )
+
+                        )
+
+                    [ShipFrom] => Array
+                        (
+                            [Name] => XIAOYU
+                            [AttentionName] => XIAOYU
+                            [Address] => Array
+                                (
+                                    [AddressLine] => Array
+                                        (
+                                            [0] => 2548 Earle Ave 
+                                        )
+
+                                    [City] => rosemead
+                                    [StateProvinceCode] => CA
+                                    [PostalCode] => 91770
+                                    [CountryCode] => US
+                                )
+
+                            [Phone] => Array
+                                (
+                                    [Number] => 6262356800
+                                )
+
+                        )
+
+                    [PaymentInformation] => Array
+                        (
+                            [ShipmentCharge] => Array
+                                (
+                                    [Type] => 01
+                                    [BillShipper] => Array
+                                        (
+                                            [AccountNumber] => 8A9Y19
+                                        )
+
+                                )
+
+                        )
+
+                    [Service] => Array
+                        (
+                            [Code] => 03
+                            [Description] => Service Description
+                        )
+
+                    [Package] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [Description] => Description
+                                    [Packaging] => Array
+                                        (
+                                            [Code] => 02
+                                            [Description] => Description
+                                        )
+
+                                    [PackageWeight] => Array
+                                        (
+                                            [Weight] => 8
+                                            [UnitOfMeasurement] => Array
+                                                (
+                                                    [Code] => LBS
+                                                    [Description] => Pounds
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [LabelSpecification] => Array
+                        (
+                            [LabelImageFormat] => Array
+                                (
+                                    [Code] => GIF
+                                    [Description] => GIF
+                                )
+
+                            [HTTPUserAgent] => Mozilla/4.5
+                        )
+
+                )
+
+        )
+
+)
+Array
+(
+    [UPSSecurity] => Array
+        (
+            [UsernameToken] => Array
+                (
+                    [Username] => moatdev
+                    [Password] => GXRp8BKEX&93zfYq
+                )
+
+            [ServiceAccessToken] => Array
+                (
+                    [AccessLicenseNumber] => EDC3C05323335E52
+                )
+
+        )
+
+    [ShipmentRequest] => Array
+        (
+            [Request] => Array
+                (
+                    [RequestOption] => validate
+                )
+
+            [Shipment] => Array
+                (
+                    [Description] => 
+                    [Shipper] => Array
+                        (
+                            [Name] => Gregory 
+                            [AttentionName] => Gregory 
+                            [ShipperNumber] => 8A9Y19
+                            [Address] => Array
+                                (
+                                    [AddressLine] => Array
+                                        (
+                                            [0] => 1066 Mirror Lake Dr
+                                        )
+
+                                    [City] => Merced 
+                                    [StateProvinceCode] => CA
+                                    [PostalCode] => 95340
+                                    [CountryCode] => US
+                                )
+
+                            [Phone] => Array
+                                (
+                                    [Number] => 5104914107
+                                )
+
+                        )
+
+                    [ShipTo] => Array
+                        (
+                            [Name] => Receiving Dept
+                            [AttentionName] => Receiving Dept
+                            [Address] => Array
+                                (
+                                    [AddressLine] => Array
+                                        (
+                                            [0] => 14474 Carlson Circle
+                                        )
+
+                                    [City] => Tampa
+                                    [StateProvinceCode] => FL
+                                    [PostalCode] => 33626
+                                    [CountryCode] => US
+                                )
+
+                            [Phone] => Array
+                                (
+                                    [Number] => 8005818987
+                                )
+
+                        )
+
+                    [ShipFrom] => Array
+                        (
+                            [Name] => Gregory 
+                            [AttentionName] => Gregory 
+                            [Address] => Array
+                                (
+                                    [AddressLine] => Array
+                                        (
+                                            [0] => 1066 Mirror Lake Dr
+                                        )
+
+                                    [City] => Merced 
+                                    [StateProvinceCode] => CA
+                                    [PostalCode] => 95340
+                                    [CountryCode] => US
+                                )
+
+                            [Phone] => Array
+                                (
+                                    [Number] => 5104914107
+                                )
+
+                        )
+
+                    [PaymentInformation] => Array
+                        (
+                            [ShipmentCharge] => Array
+                                (
+                                    [Type] => 01
+                                    [BillShipper] => Array
+                                        (
+                                            [AccountNumber] => 8A9Y19
+                                        )
+
+                                )
+
+                        )
+
+                    [Service] => Array
+                        (
+                            [Code] => 03
+                            [Description] => Service Description
+                        )
+
+                    [Package] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [Description] => Description
+                                    [Packaging] => Array
+                                        (
+                                            [Code] => 02
+                                            [Description] => Description
+                                        )
+
+                                    [PackageWeight] => Array
+                                        (
+                                            [Weight] => 5
+                                            [UnitOfMeasurement] => Array
+                                                (
+                                                    [Code] => LBS
+                                                    [Description] => Pounds
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [LabelSpecification] => Array
+                        (
+                            [LabelImageFormat] => Array
+                                (
+                                    [Code] => GIF
+                                    [Description] => GIF
+                                )
+
+                            [HTTPUserAgent] => Mozilla/4.5
+                        )
+
+                )
+
+        )
+
+)

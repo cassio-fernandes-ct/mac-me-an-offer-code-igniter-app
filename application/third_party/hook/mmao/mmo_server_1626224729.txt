@@ -1,0 +1,14 @@
+stdClass Object
+(
+    [producer] => stores/ilhtqzrn07
+    [hash] => c8d609b7937295a3212a07b9445eed8d4b11aecc
+    [created_at] => 1684958600
+    [store_id] => 1000784909
+    [scope] => store/customer/created
+    [data] => stdClass Object
+        (
+            [type] => customer
+            [id] => 499920
+        )
+
+)
