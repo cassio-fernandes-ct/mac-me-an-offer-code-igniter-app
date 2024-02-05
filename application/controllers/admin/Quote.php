@@ -4,16 +4,19 @@ class Quote extends CI_controller
     public function __construct()
     {
         parent::__construct();
-        $session_data = $this->session->userdata('admin_session');
-        if (!isset($session_data) || empty($session_data)) {
-            redirect('admin/login');
-        }
+        // $session_data = $this->session->userdata('admin_session');
+        // if (!isset($session_data) || empty($session_data)) {
+        //     redirect('admin/login');
+        // }
 
         ini_set('memory_limit', '-1');
         $this->load->library('upload');
         $this->load->library('image_lib');
         $this->load->model("admin/quotemodel");
         $this->load->library('email');
+        ini_set('error_reporting', 'E_ALL');
+        ini_set('display_errors', 'On');
+
 
     }
 
@@ -256,7 +259,6 @@ class Quote extends CI_controller
 
     public function export()
     {
-        
         $this->quotemodel->export();
     }
 
