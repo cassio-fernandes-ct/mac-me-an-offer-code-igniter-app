@@ -99,7 +99,7 @@ if (isset($deleted) && !empty($deleted)) {?>
 											<div class="dropdown bootstrap-select form-control">
 												<select name = "status" class="form-control bootstrap-select" id="kt_form_status" tabindex="-98">
 														<option value="all">All</option>
-														<option value="abandoned">Abandoned</option>
+														<!-- <option value="abandoned">Abandoned</option> -->
 														<option value="completed">Completed</option>
 														<option value="knockoutapproval">Pending Knockout Quotes</option>
 												</select>

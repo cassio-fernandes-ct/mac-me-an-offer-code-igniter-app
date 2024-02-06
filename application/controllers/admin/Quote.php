@@ -292,4 +292,9 @@ class Quote extends CI_controller
         $response = $this->quotemodel->change_payment_status();
     }
 
+    public function purgeOldExports()
+    {
+        $this->quotemodel->purgeOldExports();
+    }
+
 }

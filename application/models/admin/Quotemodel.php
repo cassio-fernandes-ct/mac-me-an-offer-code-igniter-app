@@ -403,12 +403,13 @@ class Quotemodel extends CI_Model
 
     public function export()
     { 
-        ini_set( 'display_errors', true);
-        error_reporting(E_ALL);
+        //ini_set( 'display_errors', true);
+       // error_reporting(E_ALL);
         $post = $this->input->post();
         $filter = '';
         if ($post['status'] == 'all') {
-            $filter = "WHERE (q.contact_flag = 1 OR q.contact_flag = 0)";
+            //$filter = "WHERE (q.contact_flag = 1 OR q.contact_flag = 0)";
+            $filter = "WHERE (q.contact_flag = 1 )"; //TO REMOVE abandoned
         }
         if ($post['status'] == 'abandoned') {
             $filter = "WHERE q.contact_flag = 0 ";
@@ -539,7 +540,7 @@ class Quotemodel extends CI_Model
             $result[0][] = 'Quote Created Date';
             $result[0][] = 'Offer Amount';
             $result[0][] = 'Vendor Email';
-            //$result[0][] = 'Status';
+            $result[0][] = 'Status';
             $result[0][] = 'Selected Model';
             $result[0][] = 'Expected Condition';
             $result[0][] = 'Original Accessories';
@@ -630,7 +631,7 @@ class Quotemodel extends CI_Model
                 $off_price = explode('$', $query_result['offered_price']);
                 $price_field = ($off_price[1] > 0) ? $query_result['offered_price'] : $query_result['price'];
                 
-                if($exp_type=='normal' && $status != 'Abandoned'){
+                if($exp_type=='normal'){
                     // $result[$i][] = $query_result['id'];
                     // $result[$i][] = $query_result['form_first_name']." ".$query_result['form_last_name'];
                     $result[$i][] = 'Checking Account';
@@ -664,7 +665,7 @@ class Quotemodel extends CI_Model
                     $result[$i][] = date("m/d/Y", strtotime($query_result['created_date']));
                     $result[$i][] = $query_result['offered_price'];
                     $result[$i][] = $query_result['form_email_address'];
-                    //$result[$i][] = 'Status';
+                    $result[$i][] = $status;
                     $result[$i][] = $query_result['product_title'];
                     $result[$i][] = $expected_condition;
                     $result[$i][] = $original_accessories;
@@ -684,7 +685,7 @@ class Quotemodel extends CI_Model
 
                     $without_currency = explode('$', $price_field);
                     $pric = str_replace(",", "", $without_currency[1]);
-                    $qut_price = number_format($pric,2,".",""); 
+                    $qut_price = number_format(floatval($pric),2,".",""); 
                     $total_price = $total_price+$qut_price;
 
                     $ORIGBNKID = '061000227';
@@ -730,7 +731,7 @@ class Quotemodel extends CI_Model
                     $result[$i][] = date("m/d/Y", strtotime($query_result['created_date']));
                     $result[$i][] = $query_result['offered_price'];
                     $result[$i][] = $query_result['form_email_address'];
-                    //$result[$i][] = 'Status';
+                    $result[$i][] = $status;
                     $result[$i][] = $query_result['product_title'];
                     $result[$i][] = $expected_condition;
                     $result[$i][] = $original_accessories;
@@ -792,7 +793,7 @@ class Quotemodel extends CI_Model
 
     }
 
-    public function array_to_csv_download($array, $filename = "export.csv", $export_type, $delimiter = ";"){
+    public function array_to_csv_download($array, $filename, $export_type, $delimiter = ";"){
         if($export_type == 'well_fargo'){ 
             $fh = fopen($filename, 'w');
             foreach($array as $data){ 
@@ -1120,6 +1121,31 @@ class Quotemodel extends CI_Model
             $response = array('message' => "Payment status updated successfully.",'status' => 1); 
         }
         echo json_encode($response);
+    }
+
+    public function purgeOldExports()
+    {
+        $exportsFolder = 'exports/';
+        $daysThreshold = 14;
+        $currentTimestamp = time();
+         
+        $files = glob($exportsFolder . '*');
+        foreach ($files as $file) {
+             
+            if (is_file($file)) {
+                 
+                $modifiedTimestamp = filemtime($file);
+                $differenceInSeconds = $currentTimestamp - $modifiedTimestamp;
+                $differenceInDays = floor($differenceInSeconds / (60 * 60 * 24));
+                
+                if ($differenceInDays > $daysThreshold) {
+                    unlink(FCPATH . $file);
+                    echo "Deleted file: ".FCPATH.$file."\n";
+                }
+            }
+        }
+
+
     }
 
 }
