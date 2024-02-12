@@ -494,9 +494,9 @@ class Quotemodel extends CI_Model
         }
  
         // =====================================
-        $query = $this->db->query("SELECT q.*, shipping_label.shipping_image,p.product_title FROM " . $this->quote_table . " as q LEFT JOIN shipping_label ON (q.id = shipping_label.quote_id) LEFT JOIN " . $this->product_table . " as p ON (p.bc_product_id = q.product_id) " . $filter . " " . $search_query . " ".$payment_filter." ".$pay_status_filter." ORDER BY q.id DESC ");
+        $query = $this->db->query("SELECT q.*, shipping_label.shipping_image, shipping_label_beta.shipping_image AS shipping_label, p.product_title FROM " . $this->quote_table . " as q LEFT JOIN shipping_label_beta ON (q.id = shipping_label_beta.quote_id) LEFT JOIN shipping_label ON (q.id = shipping_label.quote_id) LEFT JOIN " . $this->product_table . " as p ON (p.bc_product_id = q.product_id) " . $filter . " " . $search_query . " ".$payment_filter." ".$pay_status_filter." ORDER BY q.id DESC ");
         $query_results = $query->result_array();
-
+       
         // Duplicates have appeared at least once as a result of this query
         // Therefore we loop through and remove any duplicates to prevent it from happening again
         $query_results_tmp = [];
@@ -625,6 +625,10 @@ class Quotemodel extends CI_Model
                 if (isset($query_result['shipping_image']) && !empty($query_result['shipping_image'])) {
                     $label = 'https://app.macmeanoffer.com//application/uploads/ups/shipping/' . $query_result['shipping_image'];
                 }
+                if (isset($query_result['shipping_label']) && !empty($query_result['shipping_label'])) {
+                    $shipping_label_link = 'https://app.macmeanoffer.com//application/uploads/ups/shipping/' . $query_result['shipping_label'];
+                }
+
                 $form_street1 = $query_result['form_street1']!='' ? $query_result['form_street1']."\n" : "";
                 $form_street2 = $query_result['form_street2']!='' ? $query_result['form_street2']."\n" : "";
 
@@ -673,7 +677,7 @@ class Quotemodel extends CI_Model
                     $result[$i][] = $upgrades;
                     $result[$i][] = $hardware_issues;
                     $result[$i][] = str_replace("–", "", $query_result['receive_payment']); //$requested_payment_method;
-                    $result[$i][] = $label; //$shipping_label_link;
+                    $result[$i][] = $shipping_label_link;
 
                     //$result[$i][] = $payment_status;
                     //$result[$i][] = $query_result['product_title'];
@@ -739,7 +743,7 @@ class Quotemodel extends CI_Model
                     $result[$i][] = $upgrades;
                     $result[$i][] = $hardware_issues;
                     $result[$i][] = str_replace("–", "", $query_result['receive_payment']); //$requested_payment_method;
-                    $result[$i][] = $label; //$shipping_label_link;
+                    $result[$i][] = $shipping_label_link;
 
                     //$result[$i][] = 'SR0000CL2920CS3672';
                     // $result[$i][] = '100';
