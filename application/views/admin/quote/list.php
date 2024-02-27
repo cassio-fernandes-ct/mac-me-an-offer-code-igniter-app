@@ -262,7 +262,11 @@ if (isset($deleted) && !empty($deleted)) {?>
 											<i class="flaticon2-plus"></i>
 											Export Wells-Fargo
 										</a>
-									</div> 
+										&nbsp;
+										<a target="blank" class="btn btn-brand btn-icon-sm cust_export_bulk" href="/admin/quote/downloadExportFolder">
+											Download Exports
+										</a>
+									</div>
 								</div> 
 							</div>
 						</div>
