@@ -297,4 +297,56 @@ class Quote extends CI_controller
         $this->quotemodel->purgeOldExports();
     }
 
+    public function downloadExportFolder() {
+        $folderPath = 'exports';
+        $zipFilename = 'exports.zip';
+
+        // Normalize paths for platform independence
+        $folderPath = realpath($folderPath);
+        $zipFilename = str_replace('/', '_', $zipFilename); // Ensure valid filename structure
+    
+        // Ensure the ZipArchive extension is loaded
+        if (!class_exists('ZipArchive')) {
+            die("Error: ZipArchive class is not available.");
+        }
+    
+        // Create a new ZipArchive instance
+        $zip = new ZipArchive(); 
+    
+        // Create the archive or display an error if it fails
+        if ($zip->open($zipFilename, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== TRUE) {
+            die("Error: Failed to create the zip archive.");
+        }
+    
+        // Recursively add files to the archive
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($folderPath),
+            RecursiveIteratorIterator::LEAVES_ONLY
+        );
+    
+        foreach ($files as $name => $file) {
+            // Skip directories
+            if (!$file->isDir()) {
+                $filePath = $file->getRealPath();
+                $relativePath = substr($filePath, strlen($folderPath) + 1);
+                $zip->addFile($filePath, $relativePath);
+            }
+        }
+    
+        // Close the archive and check for errors in doing so
+        if (!$zip->close()) {
+            die("Error: Failed to close the zip archive.");
+        }
+    
+        // Send download headers
+        header('Content-Type: application/zip');
+        header('Content-disposition: attachment; filename=' . $zipFilename);
+        header('Content-Length: ' . filesize($zipFilename));
+    
+        // Flush the zip file to the browser as a download
+        readfile($zipFilename);
+    
+        // Delete the zip file after the download for cleanup (optional)
+        unlink($zipFilename);
+    }
 }
