@@ -821,7 +821,7 @@ class Quotemodel extends CI_Model
             fclose($fh);
 
             $fileNameOnly = explode('/', $filename);
-            $fileNameOnly = $fileNameOnly[array_key_last($fileNameOnly)];
+            $fileNameOnly = $fileNameOnly[$this->array_key_last($fileNameOnly)];
 
             header('Content-Description: File Transfer');
             header('Content-Disposition: attachment;filename="' . $fileNameOnly . '";');
@@ -1159,8 +1159,14 @@ class Quotemodel extends CI_Model
                 }
             }
         }
+    }
 
-
+    protected function array_key_last($array) {
+        if (!is_array($array) || empty($array)) {
+            return NULL;
+        }
+        
+        return array_keys($array)[count($array)-1];
     }
 
 }
