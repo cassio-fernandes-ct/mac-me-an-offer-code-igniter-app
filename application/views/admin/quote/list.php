@@ -76,7 +76,7 @@ if (isset($deleted) && !empty($deleted)) {?>
 				<?php $this->session->unset_userdata('deletedata');}?>
 
 				<div class="kt-form kt-form--label-right">
-				<form id = "myform" method = "POST" action="https://app.macmeanoffer.com/admin/quote/export">
+				<form id = "myform" method = "POST" action="/admin/quote/export">
 
 					<div class="row align-items-center">
 						<div class="col-xl-12 order-2 order-xl-1">
@@ -99,7 +99,7 @@ if (isset($deleted) && !empty($deleted)) {?>
 											<div class="dropdown bootstrap-select form-control">
 												<select name = "status" class="form-control bootstrap-select" id="kt_form_status" tabindex="-98">
 														<option value="all">All</option>
-														<option value="abandoned">Abandoned</option>
+														<!-- <option value="abandoned">Abandoned</option> -->
 														<option value="completed">Completed</option>
 														<option value="knockoutapproval">Pending Knockout Quotes</option>
 												</select>
@@ -262,7 +262,11 @@ if (isset($deleted) && !empty($deleted)) {?>
 											<i class="flaticon2-plus"></i>
 											Export Wells-Fargo
 										</a>
-									</div> 
+										&nbsp;
+										<a target="blank" class="btn btn-brand btn-icon-sm cust_export_bulk" href="/admin/quote/downloadExportFolder">
+											Download Exports
+										</a>
+									</div>
 								</div> 
 							</div>
 						</div>
