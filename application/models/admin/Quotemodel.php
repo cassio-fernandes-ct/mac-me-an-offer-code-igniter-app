@@ -799,7 +799,14 @@ class Quotemodel extends CI_Model
 
     public function array_to_csv_download($array, $filename, $export_type, $delimiter = ";"){
         if($export_type == 'well_fargo'){ 
+            $directory = "exports";
+
+            if (!is_dir($directory)) {
+                mkdir($directory, 0755, true); // 'true' for recursive creation if needed
+            }
+
             $fh = fopen($filename, 'w');
+
             foreach($array as $data){ 
                 $num = count($data) ;    
                 $last = $num - 1;
@@ -812,15 +819,19 @@ class Quotemodel extends CI_Model
                 fwrite($fh, "\r"); //\n
             }
             fclose($fh);
+
+            $fileNameOnly = explode('/', $filename);
+            $fileNameOnly = $fileNameOnly[array_key_last($fileNameOnly)];
+
             header('Content-Description: File Transfer');
-            header('Content-Disposition: attachment;filename="' . $filename . '";');
+            header('Content-Disposition: attachment;filename="' . $fileNameOnly . '";');
             header('Expires: 0');
             header('Cache-Control: must-revalidate');
             header('Pragma: public');
             // header('Content-Length: ' . filesize($file));
             // header("Content-Type: text/plain");
             header("Content-Type: text/csv");
-            readfile('exports/'.$filename);
+            readfile($filename);
 
         }else{  
             header('Content-Encoding: UTF-8');

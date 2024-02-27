@@ -76,7 +76,7 @@ if (isset($deleted) && !empty($deleted)) {?>
 				<?php $this->session->unset_userdata('deletedata');}?>
 
 				<div class="kt-form kt-form--label-right">
-				<form id = "myform" method = "POST" action="https://app.macmeanoffer.com/admin/quote/export">
+				<form id = "myform" method = "POST" action="/admin/quote/export">
 
 					<div class="row align-items-center">
 						<div class="col-xl-12 order-2 order-xl-1">
