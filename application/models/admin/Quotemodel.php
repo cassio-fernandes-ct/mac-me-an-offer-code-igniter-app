@@ -404,12 +404,23 @@ class Quotemodel extends CI_Model
     public function export()
     { 
         //ini_set( 'display_errors', true);
-       // error_reporting(E_ALL);
+        //error_reporting(E_ALL);
         $post = $this->input->post();
         $filter = '';
+
+        $payment_filter = '';
+        $pay_method_arr = $this->pay_method_arr; 
+        $exp_type = $post['exporttype'];
+        $pay_mthd = $post['payment_method'];
+
         if ($post['status'] == 'all') {
-            //$filter = "WHERE (q.contact_flag = 1 OR q.contact_flag = 0)";
-            $filter = "WHERE (q.contact_flag = 1 )"; //TO REMOVE abandoned
+
+            // The new template will not have any abandoned
+            if($exp_type == 'new-template'){
+                $filter = "WHERE (q.contact_flag = 1 )"; //TO REMOVE abandoned
+            } else {
+                $filter = "WHERE (q.contact_flag = 1 OR q.contact_flag = 0)";
+            }
         }
         if ($post['status'] == 'abandoned') {
             $filter = "WHERE q.contact_flag = 0 ";
@@ -422,10 +433,7 @@ class Quotemodel extends CI_Model
             $filter = "WHERE q.knockout > 0 AND q.contact_flag = 1";
         }
 
-        $payment_filter = '';
-        $pay_method_arr = $this->pay_method_arr; 
-        $exp_type =  $post['exporttype'];
-        $pay_mthd = $post['payment_method'];
+        
         $i=1;
         $tmp_pay_method_arr = array();
         if(!empty($pay_mthd)&&$pay_mthd!='all'&&!in_array("all", $pay_mthd)){
@@ -489,7 +497,7 @@ class Quotemodel extends CI_Model
         // Creation & Modified date filter
         if (isset($post['startdate']) && !empty($post['startdate']) && isset($post['enddate']) && !empty($post['enddate'])) {
             $search_query .= " AND DATE(q.created_date) >= '".$post['startdate']."' AND DATE(q.created_date) <= '".$post['enddate']."'";
-        }elseif (isset($post['modified_startdate']) && !empty($post['modified_startdate']) && isset($post['modified_enddate']) && !empty($post['modified_enddate'])) {
+        } else if(isset($post['modified_startdate']) && !empty($post['modified_startdate']) && isset($post['modified_enddate']) && !empty($post['modified_enddate'])) {
             $search_query .= " AND DATE(q.modified_date) >= '".$post['modified_startdate']."' AND DATE(q.modified_date) <= '".$post['modified_enddate']."'";
         }
  
@@ -510,54 +518,88 @@ class Quotemodel extends CI_Model
             $i = 1;
             $total_price=0;
             $data_cnt = count($query_results);
-            //$result[0][] = ($exp_type=='normal') ? 'Check No.' : 'PAYMTHD';
-            //$result[0][] = ($exp_type=='normal') ? 'Payee' : 'CRDDBTFL';
-            $result[0][] = ($exp_type=='normal') ? 'Bank Account' : 'TRANNO';
-            //$result[0][] = ($exp_type=='normal') ? 'Mailing Address' : 'VALDT';
-            //$result[0][] = ($exp_type=='normal') ? 'Date' : 'PAYAMT'; 
-            //$result[0][] = ($exp_type=='normal') ? 'Location' : 'ORIGACCTTY';
-            //$result[0][] = ($exp_type=='normal') ? 'Memo' : 'ORIGACCT';
-            //$result[0][] = ($exp_type=='normal') ? 'Print Later' : 'ORIGBNKIDTY';
-            //$result[0][] = ($exp_type=='normal') ? 'Type' : 'ORIGBNKID';
-            //$result[0][] = ($exp_type=='normal') ? 'Category/Account' : 'ORIGTORCVPRTYINF';
-            //$result[0][] = ($exp_type=='normal') ? 'Product/Service' : 'ORIGPRTYNM';
-            //$result[0][] = ($exp_type=='normal') ? 'Qty' : 'ORIGPRTYADDR1';
-            //$result[0][] = ($exp_type=='normal') ? 'Rate' : 'ORIGPRTYCTY';
-            //$result[0][] = ($exp_type=='normal') ? 'Description' : 'ORIGPRTYSTPRO';
-            //$result[0][] = ($exp_type=='normal') ? 'Amount' : 'ORIGPRTYPSTCD';
-            //$result[0][] = ($exp_type=='normal') ? 'Billable' : 'ORIGPRTYCTRYCD';
-            $result[0][] = ($exp_type=='normal') ? 'Customer/Project' : 'Vendor Name';
-            $result[0][] = ($exp_type=='normal') ? 'Tax Rate' : 'Vendor Address 1';
-            $result[0][] = ($exp_type=='normal') ? 'Class' : 'Vendor Address 2';
-            $result[0][] = ($exp_type=='normal') ? 'Serial Number' : 'Vendor Address 3';
-            $result[0][] = ($exp_type=='normal') ? 'Selected Option' : 'Vendor City';
-            $result[0][] = ($exp_type=='normal') ? 'Status' : 'Vendor State';
-            $result[0][] = ($exp_type=='normal') ? 'Email Address' : 'Vendor Zip';
-            $result[0][] = ($exp_type=='normal') ? 'How would you like to receive payment?' : 'Vendor Country';
-            $result[0][] = ($exp_type=='normal') ? 'Shipping label' : 'CHKNO';
 
-            //======New Columns
-            $result[0][] = 'Quote Created Date';
-            $result[0][] = 'Offer Amount';
-            $result[0][] = 'Vendor Email';
-            $result[0][] = 'Status';
-            $result[0][] = 'Selected Model';
-            $result[0][] = 'Expected Condition';
-            $result[0][] = 'Original Accessories';
-            $result[0][] = 'Battery OK';
-            $result[0][] = 'Upgrades';
-            $result[0][] = 'Hardware Issues';
-            $result[0][] = 'Requested Payment Method';
-            $result[0][] = 'Shipping Label Link';
+            // New Export Template's columns
+            if($exp_type == "new-template") {
+                $result[0][] = 'TRANNO';
+                $result[0][] = 'Vendor Name';
+                $result[0][] = 'Vendor Address 1';
+                $result[0][] = 'Vendor Address 2';
+                $result[0][] = 'Vendor Address 3';
+                $result[0][] = 'Vendor City';
+                $result[0][] = 'Vendor State';
+                $result[0][] = 'Vendor Zip';
+                $result[0][] = 'Vendor Country';
+                $result[0][] = 'CHKNO';
+                $result[0][] = 'Quote Created Date';
+                $result[0][] = 'Offer Amount';
+                $result[0][] = 'Vendor Email';
+                $result[0][] = 'Status';
+                $result[0][] = 'Selected Model';
+                $result[0][] = 'Expected Condition';
+                $result[0][] = 'Original Accessories';
+                $result[0][] = 'Battery OK';
+                $result[0][] = 'Upgrades';
+                $result[0][] = 'Hardware Issues';
+                $result[0][] = 'Requested Payment Method';
+                $result[0][] = 'Shipping Label Link';
+                $result[0][] = 'Additional Insurance';
+            } else {
+                //$result[0][] = ($exp_type=='normal') ? 'Check No.' : 'PAYMTHD';
+                //$result[0][] = ($exp_type=='normal') ? 'Payee' : 'CRDDBTFL';
+                $result[0][] = ($exp_type=='normal') ? 'Bank Account' : 'TRANNO';
+                //$result[0][] = ($exp_type=='normal') ? 'Mailing Address' : 'VALDT';
+                //$result[0][] = ($exp_type=='normal') ? 'Date' : 'PAYAMT'; 
+                //$result[0][] = ($exp_type=='normal') ? 'Location' : 'ORIGACCTTY';
+                //$result[0][] = ($exp_type=='normal') ? 'Memo' : 'ORIGACCT';
+                //$result[0][] = ($exp_type=='normal') ? 'Print Later' : 'ORIGBNKIDTY';
+                //$result[0][] = ($exp_type=='normal') ? 'Type' : 'ORIGBNKID';
+                //$result[0][] = ($exp_type=='normal') ? 'Category/Account' : 'ORIGTORCVPRTYINF';
+                //$result[0][] = ($exp_type=='normal') ? 'Product/Service' : 'ORIGPRTYNM';
+                //$result[0][] = ($exp_type=='normal') ? 'Qty' : 'ORIGPRTYADDR1';
+                //$result[0][] = ($exp_type=='normal') ? 'Rate' : 'ORIGPRTYCTY';
+                //$result[0][] = ($exp_type=='normal') ? 'Description' : 'ORIGPRTYSTPRO';
+                //$result[0][] = ($exp_type=='normal') ? 'Amount' : 'ORIGPRTYPSTCD';
+                //$result[0][] = ($exp_type=='normal') ? 'Billable' : 'ORIGPRTYCTRYCD';
+                $result[0][] = ($exp_type=='normal') ? 'Customer/Project' : 'Vendor Name';
+                $result[0][] = ($exp_type=='normal') ? 'Tax Rate' : 'Vendor Address 1';
+                $result[0][] = ($exp_type=='normal') ? 'Class' : 'Vendor Address 2';
+                $result[0][] = ($exp_type=='normal') ? 'Serial Number' : 'Vendor Address 3';
+                $result[0][] = ($exp_type=='normal') ? 'Selected Option' : 'Vendor City';
+                $result[0][] = ($exp_type=='normal') ? 'Status' : 'Vendor State';
+                $result[0][] = ($exp_type=='normal') ? 'Email Address' : 'Vendor Zip';
+                $result[0][] = ($exp_type=='normal') ? 'How would you like to receive payment?' : 'Vendor Country';
+                $result[0][] = ($exp_type=='normal') ? 'Shipping label' : 'CHKNO';
 
-           // $result[0][] = ($exp_type=='normal') ? 'Payment Status' : 'DOCTMPLNO';
-            //$result[0][] = ($exp_type=='normal') ? 'Product Name' : 'CHKDELCD';
+                //======New Columns
+                $result[0][] = 'Quote Created Date';
+                $result[0][] = 'Offer Amount';
+                $result[0][] = 'Vendor Email';
+                $result[0][] = 'Status';
+                $result[0][] = 'Selected Model';
+                $result[0][] = 'Expected Condition';
+                $result[0][] = 'Original Accessories';
+                $result[0][] = 'Battery OK';
+                $result[0][] = 'Upgrades';
+                $result[0][] = 'Hardware Issues';
+                $result[0][] = 'Requested Payment Method';
+                $result[0][] = 'Shipping Label Link';
+
+            // $result[0][] = ($exp_type=='normal') ? 'Payment Status' : 'DOCTMPLNO';
+                //$result[0][] = ($exp_type=='normal') ? 'Product Name' : 'CHKDELCD';
+            }
+            
             if($exp_type!='normal'){ 
                 //$result[0][] = 'EPBNKID'; 
-                $result[0][] = 'EPFSTNM';  $result[0][] = 'EPLSTNM';  
-                $result[0][] = 'EPEML';    $result[0][] = 'Serial Number';   $result[0][] = 'Zelle Phone Number';              
+                $result[0][] = 'EPFSTNM';  
+                $result[0][] = 'EPLSTNM';  
+                $result[0][] = 'EPEML';    
+                $result[0][] = 'Serial Number';   
+                $result[0][] = 'Zelle Phone Number';              
                 //$result[0][] = 'INVNO'; 
-                $result[0][] = 'INVDT';    $result[0][] = 'INVDESC';                 $result[0][] = 'Quote Number';  
+                $result[0][] = 'INVDT';    
+                $result[0][] = 'INVDESC';                 
+                $result[0][] = 'Quote Number';  
                 //$result[0][] = 'INVTYPE';
                // $result[0][] = 'INVONLYREC';              
             } else {
@@ -582,30 +624,32 @@ class Quotemodel extends CI_Model
                         $selectedoption_text .= "Q. " . $selected_option->option_set_name . "\n";
                         $selectedoption_text .= "A. " . $selected_option->option_label . "\n";
 
-                        if($selected_option->option_set_name == 'What is the condition of your product?')
-                        {
-                            $expected_condition = $selected_option->option_label;
-                        }
+                        if ($exp_type == 'new-template') {
+                            if($selected_option->option_set_name == 'What is the condition of your product?')
+                            {
+                                $expected_condition = $selected_option->option_label;
+                            }
+    
+                            if($selected_option->option_set_name == 'Does your product have a fully functional battery?')
+                            {
+                                $battery_ok = $selected_option->option_label;
+                            }
+    
+                            if($selected_option->option_set_name == 'Will you be including all original accessories?')
+                            {
+                                $original_accessories = $selected_option->option_label;
+                            }
 
-                        if($selected_option->option_set_name == 'Does your product have a fully functional battery?')
-                        {
-                            $battery_ok = $selected_option->option_label;
-                        }
+                            if($selected_option->option_set_name == 'Does your product have any extraordinary upgrades?')
+                            {
+                                $upgrades = $selected_option->option_label;
+                            }
 
-                        if($selected_option->option_set_name == 'Will you be including all original accessories?')
-                        {
-                            $original_accessories = $selected_option->option_label;
+                            if($selected_option->option_set_name == 'Does your device have any noticeable cosmetic or functionality issues? Examples include failing hardware, cracks or dents, etc.')
+                            {
+                                $hardware_issues = $selected_option->option_label;
+                            }
                         }
-                        if($selected_option->option_set_name == 'Does your product have any extraordinary upgrades?')
-                        {
-                            $upgrades = $selected_option->option_label;
-                        }
-                        if($selected_option->option_set_name == 'Does your device have any noticeable cosmetic or functionality issues? Examples include failing hardware, cracks or dents, etc.')
-                        {
-                            $hardware_issues = $selected_option->option_label;
-                        }
-                         
-
                     }
                 }
 
@@ -625,8 +669,11 @@ class Quotemodel extends CI_Model
                 if (isset($query_result['shipping_image']) && !empty($query_result['shipping_image'])) {
                     $label = 'https://app.macmeanoffer.com//application/uploads/ups/shipping/' . $query_result['shipping_image'];
                 }
-                if (isset($query_result['shipping_label']) && !empty($query_result['shipping_label'])) {
-                    $shipping_label_link = 'https://app.macmeanoffer.com//application/uploads/ups/shipping/' . $query_result['shipping_label'];
+                
+                if ($exp_type == 'new-template'){
+                    if (isset($query_result['shipping_label']) && !empty($query_result['shipping_label'])) {
+                        $shipping_label_link = 'https://app.macmeanoffer.com//application/uploads/ups/shipping/' . $query_result['shipping_label'];
+                    }
                 }
 
                 $form_street1 = $query_result['form_street1']!='' ? $query_result['form_street1']."\n" : "";
@@ -683,7 +730,66 @@ class Quotemodel extends CI_Model
                     //$result[$i][] = $query_result['product_title'];
                     $result[$i][] = $query_result['insurance'] ? 'Yes' : 'No';
                      
-                }else{
+                } else if($exp_type == 'new-template') {
+                    $insted_str   = array("\r\n", "\n", "\r", ",");
+                    $replace_str = '';
+
+                    $without_currency = explode('$', $price_field);
+                    $pric = str_replace(",", "", $without_currency[1]);
+                    $qut_price = number_format(floatval($pric),2,".",""); 
+                    $total_price = $total_price + $qut_price;
+                    
+                    if($query_result['receive_payment']!=''&&$query_result['receive_payment']=='Zelle'){ 
+                        $PAYMTHD = 'CHK';
+                        $zelle_phone_number = $query_result['form_phone_number'];
+                    }else{ 
+                        $PAYMTHD = 'CHK'; //str_replace("–", "", $query_result['receive_payment']);
+                        $zelle_phone_number = '';
+                    }
+
+                    if($query_result['chkno']!=''&&$query_result['chkno']>0){
+                        $CHKNO = $query_result['chkno'];
+                    }else{ 
+                        $CHKNO = ''; 
+                    }
+
+                    $result[$i][] = $query_result['id'];
+                    $result[$i][] = $query_result['form_first_name']." ".$query_result['form_last_name'];
+                    $result[$i][] = preg_replace ('/\r\n|\r|\n|\,/', ' ', $query_result['form_street1']);
+                    $result[$i][] = str_replace($insted_str, $replace_str, $query_result['form_street1']);
+                    $result[$i][] = str_replace($insted_str, $replace_str, $query_result['form_street2']);
+                    $result[$i][] = str_replace(",", " ", $query_result['form_city']);
+                    $result[$i][] = str_replace(",", " ", $query_result['form_state']);
+                    $result[$i][] = $query_result['form_zip'];
+                    $result[$i][] = 'US';
+                    $result[$i][] = (string) trim($CHKNO); // frontend customization remaining
+
+                    //NEW COLUMN VALUES
+                    $result[$i][] = date("m/d/Y", strtotime($query_result['created_date']));
+                    $result[$i][] = $query_result['offered_price'];
+                    $result[$i][] = $query_result['form_email_address'];
+                    $result[$i][] = $status;
+                    $result[$i][] = $query_result['product_title'];
+                    $result[$i][] = $expected_condition;
+                    $result[$i][] = $original_accessories;
+                    $result[$i][] = $battery_ok;
+                    $result[$i][] = $upgrades;
+                    $result[$i][] = $hardware_issues;
+                    $result[$i][] = str_replace("–", "", $query_result['receive_payment']); //$requested_payment_method;
+                    $result[$i][] = $shipping_label_link;
+
+                    $result[$i][] = $query_result['insurance'] ? 'Yes' : 'No';
+
+                    $result[$i][] = $query_result['form_first_name'];
+                    $result[$i][] = $query_result['form_last_name'];
+
+                    $result[$i][] = '';
+                    $result[$i][] = (string) trim($query_result['form_serial_number']); 
+                    $result[$i][] = (string) trim($zelle_phone_number);  
+                    $result[$i][] = date("m/d/Y", strtotime($query_result['created_date']));
+                    $result[$i][] = $query_result['form_serial_number'];
+                    $result[$i][] = $query_result['id'];
+                } else {
                     $insted_str   = array("\r\n", "\n", "\r", ",");
                     $replace_str = ' ';
 
@@ -787,6 +893,9 @@ class Quotemodel extends CI_Model
             if($exp_type=='normal'){
                 $export_type="bulk";
                 $csv_name = 'exports/bulk_quotes.csv';
+            } else if($exp_type == 'new-template') {
+                $export_type="new_template";
+                $csv_name = 'exports/new-template-mact.'.date('HisYmd').'.csv';
             }else{
                 $export_type="well_fargo";
                 $csv_name = 'exports/mact.'.date('HisYmd').'.csv';
@@ -798,7 +907,7 @@ class Quotemodel extends CI_Model
     }
 
     public function array_to_csv_download($array, $filename, $export_type, $delimiter = ";"){
-        if($export_type == 'well_fargo'){ 
+        if($export_type == 'well_fargo' || $export_type == "new_template"){ 
             $directory = "exports";
 
             if (!is_dir($directory)) {

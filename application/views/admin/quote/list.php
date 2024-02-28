@@ -262,6 +262,21 @@ if (isset($deleted) && !empty($deleted)) {?>
 											<i class="flaticon2-plus"></i>
 											Export Wells-Fargo
 										</a>
+									</div>
+								</div> 
+							</div>
+						</div>
+					</div>
+
+					<div class="row align-items-center custome_margin">
+						<div class="col-xl-12 order-2 order-xl-1">
+							<div class="row justify-content-end">
+								<div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
+									<div class="kt-form__group kt-form__group--inline"> 
+										<a target="blank" onclick="validation('new-template')" class="btn btn-brand btn-icon-sm cust_export_bulk">
+											<i class="flaticon2-plus"></i>
+											New Export Template
+										</a>
 										&nbsp;
 										<a target="blank" class="btn btn-brand btn-icon-sm cust_export_bulk" href="/admin/quote/downloadExportFolder">
 											Download Exports
