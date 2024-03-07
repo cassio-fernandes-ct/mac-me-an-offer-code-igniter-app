@@ -770,10 +770,11 @@ class Quotemodel extends CI_Model
                     $insted_str   = array("\r\n", "\n", "\r", ",");
                     $replace_str = ' ';
 
-                    $without_currency = explode('$', $price_field);
-                    $pric = str_replace(",", "", $without_currency[1]);
-                    $qut_price = number_format($pric,2,".",""); 
-                    $total_price = $total_price+$qut_price;
+                    // Check if the price_field has the currency symbol and remove it
+                    $without_currency = strstr($price_field, '$') ? explode('$', $price_field) : $price_field;
+                    $pric = str_replace(",", "", isset($without_currency[1]) ? $without_currency[1] : $without_currency);
+                    $qut_price = number_format(floatval($pric),2,".",""); 
+                    $total_price = $total_price + $qut_price;
 
                     $ORIGBNKID = '061000227';
                     $ORIGACCT = '2000021927018';
