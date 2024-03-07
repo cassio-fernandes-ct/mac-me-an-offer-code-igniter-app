@@ -710,8 +710,9 @@ class Quotemodel extends CI_Model
                     $insted_str   = array("\r\n", "\n", "\r", ",");
                     $replace_str = '';
 
-                    $without_currency = explode('$', $price_field);
-                    $pric = str_replace(",", "", $without_currency[1]);
+                    // Check if the price_field has the currency symbol and remove it
+                    $without_currency = strstr($price_field, '$') ? explode('$', $price_field) : $price_field;
+                    $pric = str_replace(",", "", isset($without_currency[1]) ? $without_currency[1] : $without_currency);
                     $qut_price = number_format(floatval($pric),2,".",""); 
                     $total_price = $total_price + $qut_price;
                     
@@ -728,9 +729,6 @@ class Quotemodel extends CI_Model
                     }else{ 
                         $CHKNO = ''; 
                     }
-
-                    $off_price = explode('$', $query_result['offered_price']);
-                    $price_field = ($off_price[1] > 0) ? $query_result['offered_price'] : $query_result['price'];
 
                     $result[$i][] = $query_result['id'];
                     $result[$i][] = $query_result['form_first_name']." ".$query_result['form_last_name'];
