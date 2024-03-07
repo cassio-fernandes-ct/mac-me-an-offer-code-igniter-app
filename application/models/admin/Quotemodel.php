@@ -525,7 +525,7 @@ class Quotemodel extends CI_Model
                 $result[0][] = 'Vendor Name';
                 $result[0][] = 'Vendor Address 1';
                 $result[0][] = 'Vendor Address 2';
-                $result[0][] = 'Vendor Address 3';
+                // $result[0][] = 'Vendor Address 3';
                 $result[0][] = 'Vendor City';
                 $result[0][] = 'Vendor State';
                 $result[0][] = 'Vendor Zip';
@@ -729,9 +729,12 @@ class Quotemodel extends CI_Model
                         $CHKNO = ''; 
                     }
 
+                    $off_price = explode('$', $query_result['offered_price']);
+                    $price_field = ($off_price[1] > 0) ? $query_result['offered_price'] : $query_result['price'];
+
                     $result[$i][] = $query_result['id'];
                     $result[$i][] = $query_result['form_first_name']." ".$query_result['form_last_name'];
-                    $result[$i][] = preg_replace ('/\r\n|\r|\n|\,/', ' ', $query_result['form_street1']);
+                    // $result[$i][] = preg_replace ('/\r\n|\r|\n|\,/', ' ', $query_result['form_street1']);
                     $result[$i][] = str_replace($insted_str, $replace_str, $query_result['form_street1']);
                     $result[$i][] = str_replace($insted_str, $replace_str, $query_result['form_street2']);
                     $result[$i][] = str_replace(",", " ", $query_result['form_city']);
@@ -742,7 +745,7 @@ class Quotemodel extends CI_Model
 
                     //NEW COLUMN VALUES
                     $result[$i][] = date("m/d/Y", strtotime($query_result['created_date']));
-                    $result[$i][] = $query_result['offered_price'];
+                    $result[$i][] = str_replace(",", "", $price_field);
                     $result[$i][] = $query_result['form_email_address'];
                     $result[$i][] = $status;
                     $result[$i][] = $query_result['product_title'];
