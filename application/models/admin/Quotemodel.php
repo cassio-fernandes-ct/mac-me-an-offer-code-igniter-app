@@ -289,7 +289,7 @@ class Quotemodel extends CI_Model
         $query = $this->db->query("SELECT DISTINCT quote.*, shipping_label.shipping_image,p.product_title FROM $this->quote_table LEFT JOIN shipping_label ON (quote.id = shipping_label.quote_id) LEFT JOIN " . $this->product_table . " as p ON (p.bc_product_id = quote.product_id) where quote.id = " . $id . "");
         $query_results = $query->result_array();
 
-    // Duplicates have appeared at least once as a result of this query
+        // Duplicates have appeared at least once as a result of this query
         // Therefore we loop through and remove any duplicates to prevent it from happening again
         $query_results_tmp = [];
         foreach( $query_results as $query_result ) {
@@ -856,13 +856,13 @@ class Quotemodel extends CI_Model
 
             if($exp_type == 'normal'){
                 $export_type="bulk";
-                $csv_name = 'exports/bulk_quotes.csv';
+                $csv_name = 'bulk_quotes.csv';
             } else if($exp_type == 'new-template') {
                 $export_type="new_template";
-                $csv_name = 'exports/new-template-mact.'.date('HisYmd').'.csv';
+                $csv_name = 'exports/acumatica.'.date('HisYmd').'.csv';
             }else{
                 $export_type="well_fargo";
-                $csv_name = 'exports/mact.'.date('HisYmd').'.csv';
+                $csv_name = 'wells_fargo_exports/mact.'.date('HisYmd').'.csv';
             }
  
             $this->array_to_csv_download($result,$csv_name,$export_type);
@@ -872,7 +872,7 @@ class Quotemodel extends CI_Model
 
     public function array_to_csv_download($array, $filename, $export_type, $delimiter = ";"){
         if($export_type == 'well_fargo' || $export_type == "new_template"){ 
-            $directory = "exports";
+            $directory = $export_type == "new_template" ? "exports" : "wells_fargo_exports";
 
             if (!is_dir($directory)) {
                 mkdir($directory, 0755, true); // 'true' for recursive creation if needed
@@ -910,7 +910,7 @@ class Quotemodel extends CI_Model
             header('Content-Encoding: UTF-8');
             header('Content-type: text/csv; charset=UTF-8');
             header('Content-Type: application/csv');
-            header('Content-Disposition: attachment; filename="exports/' . $filename . '";');
+            header('Content-Disposition: attachment; filename="' . $filename . '";');
 
             print $CSVData = $this->arrayToCSV($array);
             exit; 
