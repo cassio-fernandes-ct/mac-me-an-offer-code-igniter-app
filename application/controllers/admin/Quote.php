@@ -4,10 +4,15 @@ class Quote extends CI_controller
     public function __construct()
     {
         parent::__construct();
-        // $session_data = $this->session->userdata('admin_session');
-        // if (!isset($session_data) || empty($session_data)) {
-        //     redirect('admin/login');
-        // }
+
+        $isCli = php_sapi_name() === 'cli';
+
+        if (!$isCli){
+            // $session_data = $this->session->userdata('admin_session');
+            // if (!isset($session_data) || empty($session_data)) {
+            //     redirect('admin/login');
+            // }
+        }
 
         ini_set('memory_limit', '-1');
         $this->load->library('upload');
@@ -257,9 +262,11 @@ class Quote extends CI_controller
         }
     }
 
-    public function export()
+    public function export($isCli = false)
     {
-        $this->quotemodel->export();
+        $isCli = (bool) $isCli;
+
+        $this->quotemodel->export($isCli);
     }
 
     public function export_quote($title)

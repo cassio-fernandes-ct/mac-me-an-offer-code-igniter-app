@@ -401,12 +401,28 @@ class Quotemodel extends CI_Model
         }
     }
 
-    public function export()
+    public function export($isCli = false)
     { 
         //ini_set( 'display_errors', true);
         //error_reporting(E_ALL);
         $post = $this->input->post();
         $filter = '';
+        
+        if($isCli) {
+            $post = [
+                'search_text' => '',
+                'status' => 'all',
+                'check_no' => '',
+                'payee' => '',
+                'payment_method' => ['all'],
+                'payment_status' => 'all',
+                'startdate' => date('Y/m/d', strtotime('-1 day')),
+                'enddate' => date('Y/m/d'),
+                'modified_startdate' => '',
+                'modified_enddate' => '',
+                'exporttype' => 'new-template'
+            ];
+        }
 
         $payment_filter = '';
         $pay_method_arr = $this->pay_method_arr; 
