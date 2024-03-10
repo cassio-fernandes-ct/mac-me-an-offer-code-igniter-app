@@ -416,8 +416,8 @@ class Quotemodel extends CI_Model
                 'payee' => '',
                 'payment_method' => ['all'],
                 'payment_status' => 'all',
-                'startdate' => date('Y/m/d', strtotime('-1 day')),
-                'enddate' => date('Y/m/d'),
+                'startdate' => date('Y/m/d'),
+                'enddate' => date('Y/m/d', strtotime('+1 day')),
                 'modified_startdate' => '',
                 'modified_enddate' => '',
                 'exporttype' => 'new-template'
