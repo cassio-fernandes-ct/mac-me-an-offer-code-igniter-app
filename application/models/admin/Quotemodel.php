@@ -870,12 +870,21 @@ class Quotemodel extends CI_Model
  
             $result = array_values($result);
 
+            // Create a DateTime object representing the current date and time
+            $date = new DateTime('now');
+
+            // Set the timezone to EST (Eastern Standard Time)
+            $date->setTimezone(new DateTimeZone('America/New_York'));
+
+            // Format the date for your filename
+            $formattedDateTime = $date->format('mdY_His');
+
             if($exp_type == 'normal'){
                 $export_type="bulk";
                 $csv_name = 'bulk_quotes.csv';
             } else if($exp_type == 'new-template') {
                 $export_type="new_template";
-                $csv_name = 'exports/acumatica.'.date('HisYmd').'.csv';
+                $csv_name = 'exports/acumatica.'.$formattedDateTime.'.csv';
             }else{
                 $export_type="well_fargo";
                 $csv_name = 'wells_fargo_exports/mact.'.date('HisYmd').'.csv';
