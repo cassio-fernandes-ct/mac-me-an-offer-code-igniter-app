@@ -416,8 +416,8 @@ class Quotemodel extends CI_Model
                 'payee' => '',
                 'payment_method' => ['all'],
                 'payment_status' => 'all',
-                'startdate' => date('Y/m/d', strtotime('today')), // Current date at midnight
-                'enddate' => date('Y/m/d', strtotime('yesterday')), // Previous day at midnight
+                'startdate' => date('Y/m/d', strtotime('yesterday')), // Current date at midnight
+                'enddate' => date('Y/m/d', strtotime('today')), // Previous day at midnight
                 'modified_startdate' => '',
                 'modified_enddate' => '',
                 'exporttype' => 'new-template'
