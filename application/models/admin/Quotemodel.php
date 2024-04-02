@@ -416,8 +416,8 @@ class Quotemodel extends CI_Model
                 'payee' => '',
                 'payment_method' => ['all'],
                 'payment_status' => 'all',
-                'startdate' => date('Y/m/d', strtotime('-1 day')),
-                'enddate' => date('Y/m/d'),
+                'startdate' => date('Y/m/d', strtotime('today')), // Current date at midnight
+                'enddate' => date('Y/m/d', strtotime('yesterday')), // Previous day at midnight
                 'modified_startdate' => '',
                 'modified_enddate' => '',
                 'exporttype' => 'new-template'
@@ -870,9 +870,7 @@ class Quotemodel extends CI_Model
  
             $result = array_values($result);
 
-            // Create a DateTime object representing the current date and time
             $date = new DateTime('now');
-
             // Set the timezone to EST (Eastern Standard Time)
             $date->setTimezone(new DateTimeZone('America/New_York'));
 
